@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postservice:
+    build:
+      context: .
+      dockerfile: PostService/Dockerfile
+    ports:
+      - "6001:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  commentservice:
+    build:
+      context: .
+      dockerfile: CommentService/Dockerfile
+    ports:
+      - "6002:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - POST_SERVICE_URL=http://postservice/
+    depends_on:
+      - postservice
